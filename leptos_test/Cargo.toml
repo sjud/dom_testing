@@ -1,0 +1,10 @@
+[package]
+name = "leptos_test"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+leptos = { version = "0.6.0-beta" }
+wasm-bindgen = { workspace = true }
+wasm-bindgen-test = { workspace = true }
+dom_testing_library = { workspace = true }

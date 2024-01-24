@@ -1,0 +1,47 @@
+name: Rust Code Checks
+run-name: ${{ github.actor }} Push Code
+on: [pull_request]
+
+jobs:
+  format:
+    name: Format Rust code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+      - run: rustup component add rustfmt
+      - run: cargo fmt -- --check
+
+  clippy:
+    name: Lint with Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+          override: true
+      - run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libgtk-3-dev libjavascriptcoregtk-4.1-dev libsoup-3.0-dev webkit2gtk-4.1
+          cargo clippy -- -D warnings
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+          override: true
+      - run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libgtk-3-dev libjavascriptcoregtk-4.1-dev libsoup-3.0-dev webkit2gtk-4.1
+          cargo test

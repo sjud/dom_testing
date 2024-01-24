@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = ["dom_testing_library", "leptos_test"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+wasm-bindgen = { version = "0.2" }
+wasm-bindgen-test = "0.3.0"
+dom_testing_library = { path = "./dom_testing_library"}

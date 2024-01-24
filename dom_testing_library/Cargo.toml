@@ -1,0 +1,12 @@
+[package]
+name = "dom_testing_library"
+version.workspace = true
+edition.workspace = true
+[dependencies]
+thiserror = "1.0.56"
+wasm-bindgen = { workspace = true }
+web-sys= {version="0.3.0",features=["HtmlCollection","NodeList","Window",
+    "HtmlElement","Document","HtmlLabelElement","HtmlTextAreaElement","HtmlInputElement","HtmlSelectElement"]}
+
+[dev-dependencies]
+wasm-bindgen-test = { workspace = true }
