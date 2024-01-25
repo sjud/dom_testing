@@ -14,3 +14,8 @@ web-sys= {version="0.3.0",features=["HtmlCollection","NodeList","Window",
 
 [dev-dependencies]
 wasm-bindgen-test = { workspace = true }
+console_error_panic_hook = "0.1.7"
+
+[features]
+# my vscode rust analyzer needs this and I don't know why.
+leptos=[]

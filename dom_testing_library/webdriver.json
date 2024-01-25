@@ -3,11 +3,6 @@
     "goog:chromeOptions": {
       "args": ["--headless", "--no-sandbox", "--disable-gpu"]
     },
-    "moz:firefoxOptions": {
-      "args": ["-headless"],
-      "prefs": {
-      }
-    },
     "safari:options": {
     }
   }

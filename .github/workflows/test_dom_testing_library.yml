@@ -1,0 +1,32 @@
+name: Wasm-Pack Tests
+run-name: ${{ github.actor }} Wasm-Pack tests
+on: [pull_request]
+
+jobs:
+  test_1:
+    name: Run tests Chrome
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nanasess/setup-chromedriver@master
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: cargo test
+      - run: cd dom_testing_library  && wasm-pack test --headless --chrome
+  test_2:
+    name: Run tests Safari
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: cargo test
+      - run: cd dom_testing_library && wasm-pack test --headless --safari
+  
+          
