@@ -2,30 +2,24 @@
 <h2>Introduction</h2>
 The dom-testing-library family of traits helps you test UI components in a user-centric way.
 Inspired by Javascript's <a href="https://testing-library.com">Testing Library</a>
-<br><br>
 
-```    
+<h3>
     The more your tests resemble the way your software is used, the more confidence they can give you.
-```
+</h3>
 
-<br><br>
+<h2>
 The problem
-<br><br>
+</h2>
 You want to write maintainable tests that give you high confidence that your components are working for your users. As a part of this goal, you want your tests to avoid including implementation details so refactors of your components (changes to implementation but not functionality) don't break your tests and slow you and your team down.<br>
 <h2>The solution</h2>
-<br><br>
 The core library, DOM Testing Library, is a light-weight solution for testing web pages by querying and interacting with DOM nodes. The main utilities it provides involve querying the DOM for nodes in a way that's similar to how the user finds elements on the page. In this way, the library helps ensure your tests give you confidence that your application will work when a real user uses it.
-<br><br>
 
 <h2>What this library is not</h2>
-<br><br>
 <ol>
     <li>A test runner or framework</li>
     <li>Specific to a testing framework</li>
 </ol>
-<br><br>
 <h2>What you should avoid with DOM Testing Library</h2>
-<br><br>
 Testing Library encourages you to avoid testing implementation details like the internals of a component you're testing (though it's still possible). The Guiding Principles of this library emphasize a focus on tests that closely resemble how your web pages are interacted by the users.
 
 You may want to avoid the following implementation details:

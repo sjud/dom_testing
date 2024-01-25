@@ -8,3 +8,4 @@ leptos = { version = "0.6.0-beta" }
 wasm-bindgen = { workspace = true }
 wasm-bindgen-test = { workspace = true }
 dom_testing_library = { workspace = true }
+web-sys= {version="0.3.0",features=["Document"]}

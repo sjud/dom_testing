@@ -2,6 +2,10 @@
 name = "dom_testing_library"
 version.workspace = true
 edition.workspace = true
+
+[target.wasm32-unknown-unknown]
+runner = 'wasm-bindgen-test-runner'
+
 [dependencies]
 thiserror = "1.0.56"
 wasm-bindgen = { workspace = true }
