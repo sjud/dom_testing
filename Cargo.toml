@@ -6,7 +6,7 @@ members = ["dom_testing_library", "leptos_test"]
 version = "0.1.0"
 edition = "2021"
 authors = ["Sam Judelson"]
-license = "Apache"
+license = "Apache-2.0"
 repository = "https://github.com/sjud/dom_testing"
 homepage = "https://github.com/sjud/dom_testing"
 
