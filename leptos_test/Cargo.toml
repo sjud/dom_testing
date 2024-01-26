@@ -2,7 +2,8 @@
 name = "leptos_test"
 version.workspace = true
 edition.workspace = true
-
+authors.workspace = true
+description = "leptos_test is a lightweight testing crate built on top of dom_testing_library a wasm based front end testing toolkit."
 [dependencies]
 leptos = { version = "0.6.0-beta" }
 wasm-bindgen = { workspace = true }

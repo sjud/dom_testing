@@ -1,7 +1,7 @@
 <h1>DOM Testing Library</h1>
 <h2>Introduction</h2>
-The dom-testing-library family of traits helps you test UI components in a user-centric way.
-Inspired by Javascript's <a href="https://testing-library.com">Testing Library</a>
+The dom-testing-library family of traits helps you test UI components in a user-centric way, it's a more cognitively ergonomic way of writing tests for your rust based front end.
+Heavily inspired by Javascript's <a href="https://testing-library.com">Testing Library.</a>
 
 <h3>
     The more your tests resemble the way your software is used, the more confidence they can give you.
@@ -20,7 +20,7 @@ The core library, DOM Testing Library, is a light-weight solution for testing we
     <li>Specific to a testing framework</li>
 </ol>
 <h2>What you should avoid with DOM Testing Library</h2>
-Testing Library encourages you to avoid testing implementation details like the internals of a component you're testing (though it's still possible). The Guiding Principles of this library emphasize a focus on tests that closely resemble how your web pages are interacted by the users.
+DOM Testing Library encourages you to avoid testing implementation details like the internals of a component you're testing (though it's still possible). The Guiding Principles of this library emphasize a focus on tests that closely resemble how your web pages are interacted by the users.
 
 You may want to avoid the following implementation details:
 <ol>
@@ -32,11 +32,13 @@ You may want to avoid the following implementation details:
 
 <h2>Traits</h2>
 The dom testing library has a family of traits that help with dom testing.
-
+<h4> DomQuery </h4>
+DomQuery can be implemented for any frontend specific renderer, it houses the easy "test like your user" domain language and functionality.
 
 <h2>Examples</h2>
 
 <h3>Leptos</h3>
+<h3>Query the DOM in your tests the way your user would see your App!</h3>
 
 ```rust
 use wasm_bindgen_test::*;
@@ -57,7 +59,67 @@ pub fn find_component_by_text() {
         .unwrap()
         // So we can just click it!
         .click();
-    // value is a helper method that helps us parse our expected type!
-    assert_eq!(render.find_by_id("output").unwrap().value::<usize>().unwrap(),1);
+
+assert_eq!(render.find_by_id("output").unwrap().parse::<usize>().unwrap(),1);
+}
+```
+
+<h3>Query entire lists of components, and iterate over them easily.</h3>
+
+```rust
+use wasm_bindgen_test::*;
+wasm_bindgen_test_configure!(run_in_browser);
+
+#[wasm_bindgen_test]
+pub fn find_component_by_text() {
+    let render = render_for_test(||{
+        view!{
+            <ul>
+                <li id="list_item_1">Hi</li>
+                <li id="list_item_2">how</li>
+                <li id="list_item_3">are</li>
+                <li id="list_item_4">you?</li>
+            </ul>
+        }
+    });
+    let questions = render
+        /* 
+            The get_all_by_X method series return a Vec<TestElement> which derefs into HtmlElement but has helper functions describing the behavior of your app in a way that describes the usage of your app.
+        */
+        .get_all_by_id_containing("list_item")
+        .into_iter()
+        .map(|test_element|test_element.display_text())
+        .collect::<Vec<String>>()
+        .join(' ');
+
+    assert_eq!(questions,String::from("Hi how are you?"));
+}
+```
+
+<h3> Convenient error handling helps construct easy to reason tests.</h3>
+
+
+```rust
+use wasm_bindgen_test::*;
+wasm_bindgen_test_configure!(run_in_browser);
+
+#[wasm_bindgen_test]
+pub fn find_component_by_text() {
+    let render = render_for_test(||{
+        view!{
+            <ul>
+                <li id="ghost_noises_1">Boo</li>
+                <li id="ghost_noises_2">Boo</li>
+    
+            </ul>
+        }
+    });
+    assert!(render
+        .get_by_id_containing("list_item")
+        .is_more_than_one());
+    assert!(render
+        .get_by_id("shark_noise")
+        .is_not_found());
+
 }
 ```
