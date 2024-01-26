@@ -2,6 +2,8 @@
 name = "dom_testing_library"
 version.workspace = true
 edition.workspace = true
+authors.workspace = true
+description = "dom_testing_library is a lightweight front end testing toolkit for the rust frontend ecosystem. Heavily inspired by https://testing-library.com/ , write wasm_bindgen tests for your rust front end framework the same way your users will use it."
 
 [target.wasm32-unknown-unknown]
 runner = 'wasm-bindgen-test-runner'
@@ -19,3 +21,5 @@ console_error_panic_hook = "0.1.7"
 [features]
 # my vscode rust analyzer needs this and I don't know why.
 leptos=[]
+# we need to feature gate unit tests because it seems wasm-pack test can only test one at a time, integration or unit test. Not both like normal.
+unit_tests=[]

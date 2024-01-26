@@ -5,7 +5,7 @@ members = ["dom_testing_library", "leptos_test"]
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-
+authors = ["Sam Judelson"]
 [workspace.dependencies]
 wasm-bindgen = { version = "0.2.9" }
 wasm-bindgen-test = "0.3.0"
