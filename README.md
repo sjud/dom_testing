@@ -1,6 +1,6 @@
 <h1>DOM Testing Library</h1>
 <h2>Introduction</h2>
-The dom-testing-library family of traits helps you test UI components in a user-centric way, it's a more cognitively ergonomic way of writing tests for your rust based front end.
+The dom-testing-library family of traits helps you test UI components in a user-centric way.
 Heavily inspired by Javascript's <a href="https://testing-library.com">Testing Library.</a>
 
 <h3>
@@ -33,45 +33,46 @@ You may want to avoid the following implementation details:
 <h2>Traits</h2>
 The dom testing library has a family of traits that help with dom testing.
 <h4> DomQuery </h4>
-DomQuery can be implemented for any frontend specific renderer, it houses the easy "test like your user" domain language and functionality.
+DomQuery can be implemented for any frontend specific renderer, it houses the easy "test like your user uses" domain language and functionality.
 
 <h2>Examples</h2>
 
 <h3>Leptos</h3>
-<h3>Query the DOM in your tests the way your user would see your App!</h3>
+<h3>Query the DOM using method calls even your users would understand.</h3>
 
 ```rust
 use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 #[wasm_bindgen_test]
-pub fn find_component_by_text() {
+pub fn find_by_id() {
     let render = render_for_test(||{
         let count = create_rw_signal(0);
         view!{
-        <button on:click=count.update(|c|c+=1)>Increment The Output</button>
-        <div id="output">{move||count.get()}</div>
+            <button on:click=move|_|count.update(|c|*c+=1)>"Increment"</button>
+            <div id="output">{move||count.get()}</div>
         }
     });
+     
     render
         // The get_by_X method series return a struct that derefs into web_sys::HtmlElement
-        .get_by_text("Increment The Output")
+        .get_by_text("Increment")
         .unwrap()
         // So we can just click it!
         .click();
 
-assert_eq!(render.find_by_id("output").unwrap().parse::<usize>().unwrap(),1);
+    assert_eq!(render.get_by_id("output").unwrap().parse::<usize>().unwrap(),1);
 }
 ```
 
-<h3>Query entire lists of components, and iterate over them easily.</h3>
+<h3>Query related components and iterate easily.</h3>
 
 ```rust
 use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 #[wasm_bindgen_test]
-pub fn find_component_by_text() {
+pub fn iterate_list() {
     let render = render_for_test(||{
         view!{
             <ul>
@@ -83,20 +84,19 @@ pub fn find_component_by_text() {
         }
     });
     let questions = render
-        /* 
-            The get_all_by_X method series return a Vec<TestElement> which derefs into HtmlElement but has helper functions describing the behavior of your app in a way that describes the usage of your app.
-        */
-        .get_all_by_id_containing("list_item")
+        //The get_all_by_X method series return a Vec<TestElement> which derefs into HtmlElement 
+        //but has helper functions describing the behavior of your app in a way that describes the usage of your app.
+        .get_all_by_id_contains("list_item")
         .into_iter()
         .map(|test_element|test_element.display_text())
         .collect::<Vec<String>>()
-        .join(' ');
+        .join(" ");
 
     assert_eq!(questions,String::from("Hi how are you?"));
 }
 ```
 
-<h3> Convenient error handling helps construct easy to reason tests.</h3>
+<h3> Convenient error handling for understandable tests.</h3>
 
 
 ```rust
@@ -104,7 +104,7 @@ use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 #[wasm_bindgen_test]
-pub fn find_component_by_text() {
+pub fn handle_errors() {
     let render = render_for_test(||{
         view!{
             <ul>
@@ -115,7 +115,7 @@ pub fn find_component_by_text() {
         }
     });
     assert!(render
-        .get_by_id_containing("list_item")
+        .get_by_id_contains("ghost_noises")
         .is_more_than_one());
     assert!(render
         .get_by_id("shark_noise")
