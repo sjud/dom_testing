@@ -1,12 +1,21 @@
 [package]
 name = "leptos_test"
+license.workspace = true
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
+repository.workspace = true
+readme = "../README.md"
 description = "leptos_test is a lightweight testing crate built on top of dom_testing_library a wasm based front end testing toolkit."
+homepage.workspace = true
 [dependencies]
-leptos = { version = "0.6.0-beta" }
+leptos = { version = "0.6.0-beta" ,features=["csr"]}
 wasm-bindgen = { workspace = true }
-wasm-bindgen-test = { workspace = true }
 dom_testing_library = { workspace = true }
-web-sys= {version="0.3.0",features=["Document"]}
+web-sys= {version="0.3.0",features=["Element","HtmlElement"]}
+
+
+
+[dev-dependencies]
+wasm-bindgen-test = { workspace = true }
+

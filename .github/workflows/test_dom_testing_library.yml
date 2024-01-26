@@ -16,6 +16,10 @@ jobs:
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - run: cargo test
       - run: cd dom_testing_library  && wasm-pack test --headless --chrome
+      #We have to run unit tests seperately, because wasm-pack test runs one or the other but not both???
+      - run: cd dom_testing_library  && wasm-pack test --headless --chrome --features unit_tests
+      - run: cd leptos_test && wasm-pack test --headless --chrome
+
   test_2:
     name: Run tests Safari
     runs-on: macos-latest
@@ -28,5 +32,22 @@ jobs:
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - run: cargo test
       - run: cd dom_testing_library && wasm-pack test --headless --safari
+      - run: cd dom_testing_library && wasm-pack test --headless --safari --features unit_tests
+      - run: cd leptos_test && wasm-pack test --headless --safari
+
+  test_3:
+    name: Run tests Tauri
+    runs-on: ubunti-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: cargo test
+      - run: cd dom_testing_library && wasm-pack test --headless --safari
+      - run: cd dom_testing_library && wasm-pack test --headless --safari --features unit_tests
+      - run: cd leptos_test && wasm-pack test --headless --safari
   
-          
+    

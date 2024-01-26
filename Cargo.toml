@@ -6,6 +6,10 @@ members = ["dom_testing_library", "leptos_test"]
 version = "0.1.0"
 edition = "2021"
 authors = ["Sam Judelson"]
+license = "Apache"
+repository = "https://github.com/sjud/dom_testing"
+homepage = "https://github.com/sjud/dom_testing"
+
 [workspace.dependencies]
 wasm-bindgen = { version = "0.2.9" }
 wasm-bindgen-test = "0.3.0"

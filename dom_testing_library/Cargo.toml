@@ -1,9 +1,13 @@
 [package]
 name = "dom_testing_library"
+license.workspace = true
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
+repository.workspace = true
+readme = "../README.md"
 description = "dom_testing_library is a lightweight front end testing toolkit for the rust frontend ecosystem. Heavily inspired by https://testing-library.com/ , write wasm_bindgen tests for your rust front end framework the same way your users will use it."
+homepage.workspace = true
 
 [target.wasm32-unknown-unknown]
 runner = 'wasm-bindgen-test-runner'

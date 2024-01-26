@@ -1,5 +1,7 @@
 use dom_testing_library::*;
-use leptos::{create_runtime, IntoView, RuntimeId};
+use leptos::{create_runtime, mount_to, IntoView, RuntimeId};
+use wasm_bindgen::JsCast;
+use web_sys::HtmlElement;
 
 pub fn render_for_test<F, N>(f: F) -> TestRender
 where
@@ -7,25 +9,28 @@ where
     N: IntoView,
 {
     let runtime_id = create_runtime();
-    leptos::mount_to_body(f);
     let document = leptos::document();
+    let body = document.body().unwrap();
+    let test_wrapper = document.create_element("div").unwrap();
+    body.append_child(&test_wrapper).unwrap();
+    mount_to(test_wrapper.clone().unchecked_into::<HtmlElement>(), f);
     TestRender {
         runtime_id,
-        document,
+        element: test_wrapper,
     }
 }
 
 pub struct TestRender {
     runtime_id: RuntimeId,
-    document: web_sys::Document,
+    element: web_sys::Element,
 }
 impl Drop for TestRender {
     fn drop(&mut self) {
         self.runtime_id.dispose();
     }
 }
-impl HoldsDocument for TestRender {
-    fn document(&self) -> DocumentWrapper {
-        DocumentWrapper(&self.document)
+impl HoldsElement for TestRender {
+    fn element(&self) -> ElementWrapper {
+        ElementWrapper(&self.element)
     }
 }
